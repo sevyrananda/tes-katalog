@@ -14,42 +14,44 @@ class SparepartController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'kode_barang' => 'required|unique:spareparts',
-            'nama_barang' => 'required',
-            'detail_spesifikasi' => 'nullable',
-            'klasifikasi' => 'nullable',
-            'brand' => 'nullable',
-            'model' => 'nullable',
-            'harga_asli_offline' => 'required|numeric',
-            'harga_asli_online' => 'required|numeric',
-            'harga_rab_20' => 'required|numeric',
-            'harga_rab_wajar' => 'required|numeric',
-            'tanggal_update' => 'required|date',
-            'nama_vendor' => 'nullable',
-            'jumlah_ketersediaan' => 'required|integer',
-            'satuan' => 'required',
-            'keterangan' => 'nullable',
-            'gambar_perangkat' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'link_ref' => 'nullable|url',
-        ]);
+{
+    $validated = $request->validate([
+        'nama_barang' => 'required',
+        'detail_spesifikasi' => 'nullable',
+        'klasifikasi' => 'nullable',
+        'brand' => 'nullable',
+        'model' => 'nullable',
+        'harga_asli_offline' => 'required|numeric',
+        'harga_asli_online' => 'required|numeric',
+        'harga_rab_20' => 'required|numeric',
+        'harga_rab_wajar' => 'required|numeric',
+        'tanggal_update' => 'required|date',
+        'nama_vendor' => 'nullable',
+        'jumlah_ketersediaan' => 'required|integer',
+        'satuan' => 'required',
+        'keterangan' => 'nullable',
+        'gambar_perangkat' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        'link_ref' => 'nullable|url',
+    ]);
 
-        $sparepart = new Sparepart($validated);
+    // Dapatkan ID terakhir dari database
+    $lastSparepart = Sparepart::latest()->first();
+    $nextId = $lastSparepart ? $lastSparepart->id + 1 : 1;
+    $validated['kode_barang'] = 'BA' . $nextId; // Format Kode Barang
 
-        if ($request->hasFile('gambar_perangkat')) {
-            $imageName = time() . '.' . $request->gambar_perangkat->extension();
-            $request->gambar_perangkat->move(public_path('images/spareparts'), $imageName);
-            $sparepart->gambar_perangkat = $imageName;
-        }
+    $sparepart = new Sparepart($validated);
 
-        $sparepart->save();
-
-        // Mengambil seluruh sparepart setelah berhasil disimpan
-        $spareparts = Sparepart::all();
-
-        return redirect()->route('sparepart.index')->with('success', 'Data berhasil ditambahkan!', compact('spareparts'));
+    if ($request->hasFile('gambar_perangkat')) {
+        $imageName = time() . '.' . $request->gambar_perangkat->extension();
+        $request->gambar_perangkat->move(public_path('images/spareparts'), $imageName);
+        $sparepart->gambar_perangkat = $imageName;
     }
+
+    $sparepart->save();
+
+    return redirect()->route('sparepart.index')->with('success', 'Data berhasil ditambahkan!');
+}
+
 
 
     // Method update: memproses data update sparepart
@@ -106,4 +108,15 @@ class SparepartController extends Controller
 
         return redirect()->route('sparepart.index')->with('success', 'Sparepart Berhasil Dihapus');
     }
+
+    public function barangMasuk()
+{
+    return $this->hasMany(BarangMasuk::class, 'kode_barang', 'kode_barang');
+}
+
+public function barangKeluar()
+{
+    return $this->hasMany(BarangKeluar::class, 'kode_barang', 'kode_barang');
+}
+
 }

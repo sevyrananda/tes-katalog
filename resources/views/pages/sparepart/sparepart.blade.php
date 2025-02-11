@@ -6,10 +6,11 @@
     <hr class="my-2" />
 
     @if (session('success'))
-    <div class="alert alert-success alert-dismissible fade show mb-2" role="alert" style="background-color: #28a745; color: white; border: 1px solid #28a745; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); border-radius: 5px;">
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+        <div class="alert alert-success alert-dismissible fade show mb-2" role="alert"
+            style="background-color: #28a745; color: white; border: 1px solid #28a745; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); border-radius: 5px;">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     @endif
 
     <!-- Responsive Table -->
@@ -48,50 +49,58 @@
                 </thead>
                 <tbody>
                     @forelse($spareparts as $index => $sparepart)
-                    <tr class="text-gray-700 dark:text-gray-400">
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $sparepart->kode_barang }}</td>
-                        <td>{{ $sparepart->nama_barang }}</td>
-                        <td>{{ $sparepart->detail_spesifikasi }}</td>
-                        <td>{{ $sparepart->klasifikasi }}</td>
-                        <td>{{ $sparepart->brand }}</td>
-                        <td>{{ $sparepart->model }}</td>
-                        <td>Rp {{ number_format($sparepart->harga_asli_offline, 0, ',', '.') }}</td>
-                        <td>Rp {{ number_format($sparepart->harga_asli_online, 0, ',', '.') }}</td>
-                        <td>Rp {{ number_format($sparepart->harga_rab_20, 0, ',', '.') }}</td>
-                        <td>Rp {{ number_format($sparepart->harga_rab_wajar, 0, ',', '.') }}</td>
-                        <td>{{ \Carbon\Carbon::parse($sparepart->tanggal_update)->format('d-m-Y') }}</td>
-                        <td>{{ $sparepart->nama_vendor }}</td>
-                        <td>{{ $sparepart->jumlah_ketersediaan }}</td>
-                        <td>{{ $sparepart->satuan }}</td>
-                        <td>{{ $sparepart->keterangan }}</td>
-                        <td>
-                            @if($sparepart->gambar_perangkat)
-                            <img src="{{ asset('images/spareparts/' . $sparepart->gambar_perangkat) }}" alt="Gambar" class="w-16 h-16" style="width:100px; height:auto">
-                            @else
-                            <span class="text-gray-500">Tidak ada gambar</span>
-                            @endif
-                        </td>
-                        <td>
-                            @if($sparepart->link_ref)
-                            <a href="{{ $sparepart->link_ref }}" target="_blank" class="text-blue-500 underline">Lihat</a>
-                            @else
-                            <span class="text-gray-500">Tidak ada link</span>
-                            @endif
-                        </td>
-                        <td>
-                            <button type="submit" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal{{ $sparepart->id }}">
-                                <i class="bx bx-edit-alt me-2"></i> Edit
-                            </button>
-                            <button type="button" class="btn btn-danger" onclick="confirmDelete('{{ $sparepart->id }}')">
-                                <i class="bx bx-trash me-2"></i> Delete
-                            </button>
-                        </td>
-                    </tr>
+                        <tr class="text-gray-700 dark:text-gray-400">
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $sparepart->kode_barang }}</td>
+                            <td>{{ $sparepart->nama_barang }}</td>
+                            <td>{{ $sparepart->detail_spesifikasi }}</td>
+                            <td>{{ $sparepart->klasifikasi }}</td>
+                            <td>{{ $sparepart->brand }}</td>
+                            <td>{{ $sparepart->model }}</td>
+                            <td>Rp {{ number_format($sparepart->harga_asli_offline, 0, ',', '.') }}</td>
+                            <td>Rp {{ number_format($sparepart->harga_asli_online, 0, ',', '.') }}</td>
+                            <td>Rp {{ number_format($sparepart->harga_rab_20, 0, ',', '.') }}</td>
+                            <td>Rp {{ number_format($sparepart->harga_rab_wajar, 0, ',', '.') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($sparepart->tanggal_update)->format('d-m-Y') }}</td>
+                            <td>{{ $sparepart->nama_vendor }}</td>
+                            <td>{{ $sparepart->jumlah_ketersediaan }}</td>
+                            <td>{{ $sparepart->satuan }}</td>
+                            <td>{{ $sparepart->keterangan }}</td>
+                            <td>
+                                @if($sparepart->gambar_perangkat)
+                                    <img src="{{ asset('images/spareparts/' . $sparepart->gambar_perangkat) }}" alt="Gambar"
+                                        class="w-16 h-16" style="width:100px; height:auto">
+                                @else
+                                    <span class="text-gray-500">Tidak ada gambar</span>
+                                @endif
+                            </td>
+                            <td>
+                                @if($sparepart->link_ref)
+                                    <a href="{{ $sparepart->link_ref }}" target="_blank"
+                                        class="text-blue-500 underline">Lihat</a>
+                                @else
+                                    <span class="text-gray-500">Tidak ada link</span>
+                                @endif
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                                    data-bs-target="#detailModal{{ $sparepart->id }}">
+                                    <i class="bx bx-show me-2"></i> Detail
+                                </button>
+                                <button type="submit" class="btn btn-warning" data-bs-toggle="modal"
+                                    data-bs-target="#editModal{{ $sparepart->id }}">
+                                    <i class="bx bx-edit-alt me-2"></i> Edit
+                                </button>
+                                <button type="button" class="btn btn-danger"
+                                    onclick="confirmDelete('{{ $sparepart->id }}')">
+                                    <i class="bx bx-trash me-2"></i> Delete
+                                </button>
+                            </td>
+                        </tr>
                     @empty
-                    <tr>
-                        <td colspan="18" class="text-center">No data available</td>
-                    </tr>
+                        <tr>
+                            <td colspan="18" class="text-center">No data available</td>
+                        </tr>
                     @endforelse
                 </tbody>
             </table>
@@ -115,5 +124,6 @@
 @include('pages.sparepart.modal.add')
 @include('pages.sparepart.modal.edit')
 @include('pages.sparepart.modal.del')
+@include('pages.sparepart.modal.detail')
 
 @endsection

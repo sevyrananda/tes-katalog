@@ -2,11 +2,7 @@
     <div class="app-brand demo">
         <a href="index.html" class="app-brand-link">
             <span class="app-brand-logo demo">
-                <svg
-                    width="25"
-                    viewBox="0 0 25 42"
-                    version="1.1"
-                    xmlns="http://www.w3.org/2000/svg"
+                <svg width="25" viewBox="0 0 25 42" version="1.1" xmlns="http://www.w3.org/2000/svg"
                     xmlns:xlink="http://www.w3.org/1999/xlink">
                     <defs>
                         <path
@@ -39,8 +35,7 @@
                                         <use fill-opacity="0.2" fill="#FFFFFF" xlink:href="#path-4"></use>
                                     </g>
                                 </g>
-                                <g
-                                    id="Triangle"
+                                <g id="Triangle"
                                     transform="translate(19.000000, 11.000000) rotate(-300.000000) translate(-19.000000, -11.000000) ">
                                     <use fill="#696cff" xlink:href="#path-5"></use>
                                     <use fill-opacity="0.2" fill="#FFFFFF" xlink:href="#path-5"></use>
@@ -62,69 +57,110 @@
 
     <ul class="menu-inner py-1">
         <!-- Dashboard -->
-        <li class="menu-item active">
-            <a href="index.html" class="menu-link">
+        <li class="menu-item @if (request()->routeIs('index')) active @endif">
+            <a href="{{ route('index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
             </a>
         </li>
 
+
         <!-- Layouts -->
-        <li class="menu-item">
+        <li class="menu-item @if (request()->routeIs('sparepart.index')) active @endif">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-package"></i>
                 <div data-i18n="Layouts">Katalog Barang</div>
             </a>
 
             <ul class="menu-sub">
-                <li class="menu-item">
+                <li class="menu-item @if (request()->routeIs('sparepart.index')) active @endif">
                     <a href="{{ route('sparepart.index') }}" class="menu-link">
                         <div data-i18n="Sparepart">Sparepart</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="" class="menu-link">
-                        <div data-i18n="Tool Kit">Tool kit</div>
+                <li class="menu-item @if (request()->routeIs('toolkit.index')) active @endif">
+                    <a href="{{ route('toolkit.index') }}" class="menu-link">
+                        <div data-i18n="Toolkit">Toolkit</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="" class="menu-link">
+                <li class="menu-item @if (request()->routeIs('network.index')) active @endif">
+                    <a href="{{ route('network.index') }}" class="menu-link">
                         <div data-i18n="Network">Network</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="" class="menu-link">
+                <li class="menu-item @if (request()->routeIs('cctv.index')) active @endif">
+                    <a href="{{ route('cctv.index') }}" class="menu-link">
                         <div data-i18n="CCTV">CCTV</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="" class="menu-link">
-                        <div data-i18n="Tablet dan Monitor">Tablet dan Monitor</div>
+                <li class="menu-item @if (request()->routeIs('tabletmonitor.index')) active @endif">
+                    <a href="{{ route('tabletmonitor.index') }}" class="menu-link">
+                        <div data-i18n="Tablet dan Monitor">Tablet & Monitor</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="" class="menu-link">
+                <li class="menu-item @if (request()->routeIs('webcam.index')) active @endif">
+                    <a href="{{ route('webcam.index') }}" class="menu-link">
                         <div data-i18n="Webcam">Webcam</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="" class="menu-link">
-                        <div data-i18n="PC dan Laptop">PC dan Laptop</div>
+                <li class="menu-item @if (request()->routeIs('pclaptop.index')) active @endif">
+                    <a href="{{ route('pclaptop.index') }}" class="menu-link">
+                        <div data-i18n="PC dan Laptop">PC & Laptop</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="" class="menu-link">
-                        <div data-i18n="Printer">Printer</div>
+                <li class="menu-item @if (request()->routeIs('printer.index')) active @endif">
+                    <a href="{{ route('printer.index') }}" class="menu-link">
+                        <div data-i18n="Printer">Printer & Scanner</div>
+                    </a>
+                </li>
+                <li class="menu-item @if (request()->routeIs('pids.index')) active @endif">
+                    <a href="{{ route('pids.index') }}" class="menu-link">
+                        <div data-i18n="PIDS">PIDS</div>
+                    </a>
+                </li>
+                <li class="menu-item @if (request()->routeIs('locotrack.index')) active @endif">
+                    <a href="{{ route('locotrack.index') }}" class="menu-link">
+                        <div data-i18n="Locotrack">Locotrack</div>
+                    </a>
+                </li>
+                <li class="menu-item @if (request()->routeIs('atk.index')) active @endif">
+                    <a href="{{ route('atk.index') }}" class="menu-link">
+                        <div data-i18n="ATK">ATK</div>
+                    </a>
+                </li>
+                <li class="menu-item @if (request()->routeIs('ups.index')) active @endif">
+                    <a href="{{ route('ups.index') }}" class="menu-link">
+                        <div data-i18n="UPS">UPS & Baterai</div>
                     </a>
                 </li>
             </ul>
         </li>
 
         <!-- Transaksi -->
+        <li class="menu-item @if (request()->routeIs('sparepart.index')) active @endif">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-transfer-alt"></i>
+                <div data-i18n="Layouts">Transaksi Barang</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item @if (request()->routeIs('barang_masuk.index')) active @endif">
+                    <a href="{{ route('barang_masuk.index') }}" class="menu-link">
+                        <div data-i18n="Barang Masuk">Barang Masuk</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link">
+                        <div data-i18n="Barang Keluar">Barang Keluar</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <!-- Laporan -->
         <li class="menu-item">
             <a href="" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-news"></i>
-                <div data-i18n="Analytics">Transaksi Barang</div>
+                <div data-i18n="Analytics">Laporan</div>
             </a>
         </li>
     </ul>

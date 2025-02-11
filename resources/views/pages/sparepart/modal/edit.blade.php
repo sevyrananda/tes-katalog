@@ -16,7 +16,7 @@
 
                     <div class="mb-3">
                         <label for="kode_barang" class="form-label">Kode Barang</label>
-                        <input type="text" class="form-control" id="kode_barang" name="kode_barang" value="{{ $sparepart->kode_barang }}" required>
+                        <input type="text" class="form-control" id="kode_barang" name="kode_barang" value="{{ $sparepart->kode_barang }}" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="nama_barang" class="form-label">Nama Barang</label>
@@ -81,7 +81,7 @@
                             <img src="{{ asset('images/spareparts/' . $sparepart->gambar_perangkat) }}" alt="Gambar Sparepart" style="width: 150px; height: auto;">
                             @endif
                         </div>
-                        <input type="file" class="form-control" id="gambar_perangkat" name="gambar_perangkat">
+                        <input type="file" class="form-control" id="gambar_perangkat" name="gambar_perangkat" accept=".png, .jpg, .jpeg">
                     </div>
                     <div class="mb-3">
                         <label for="link_ref" class="form-label">Link Referensi</label>

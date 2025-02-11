@@ -1,5 +1,6 @@
 <!-- Modal Tambah Sparepart -->
-<div class="modal fade" id="modalTambahSparepart" tabindex="-1" aria-labelledby="modalTambahSparepartLabel" aria-hidden="true">
+<div class="modal fade" id="modalTambahSparepart" tabindex="-1" aria-labelledby="modalTambahSparepartLabel"
+    aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -8,19 +9,21 @@
             </div>
             <hr>
             <div class="modal-body">
-                <form id="formTambahSparepart" action="{{ route('sparepart.store') }}" method="POST" enctype="multipart/form-data">
+                <form id="formTambahSparepart" action="{{ route('sparepart.store') }}" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label for="kode_barang" class="form-label">Kode Barang</label>
                         <input type="text" class="form-control" id="kode_barang" name="kode_barang" required>
-                    </div>
+                    </div> --}}
                     <div class="mb-3">
                         <label for="nama_barang" class="form-label">Nama Barang</label>
                         <input type="text" class="form-control" id="nama_barang" name="nama_barang" required>
                     </div>
                     <div class="mb-3">
                         <label for="detail_spesifikasi" class="form-label">Detail Spesifikasi</label>
-                        <textarea class="form-control" id="detail_spesifikasi" name="detail_spesifikasi" rows="3" required></textarea>
+                        <textarea class="form-control" id="detail_spesifikasi" name="detail_spesifikasi" rows="3"
+                            required></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="klasifikasi" class="form-label">Klasifikasi</label>
@@ -36,11 +39,13 @@
                     </div>
                     <div class="mb-3">
                         <label for="harga_asli_offline" class="form-label">Harga Asli Offline</label>
-                        <input type="number" class="form-control" id="harga_asli_offline" name="harga_asli_offline" required>
+                        <input type="number" class="form-control" id="harga_asli_offline" name="harga_asli_offline"
+                            required>
                     </div>
                     <div class="mb-3">
                         <label for="harga_asli_online" class="form-label">Harga Asli Online</label>
-                        <input type="number" class="form-control" id="harga_asli_online" name="harga_asli_online" required>
+                        <input type="number" class="form-control" id="harga_asli_online" name="harga_asli_online"
+                            required>
                     </div>
                     <div class="mb-3">
                         <label for="harga_rab_20" class="form-label">Harga RAB 20%</label>
@@ -60,7 +65,8 @@
                     </div>
                     <div class="mb-3">
                         <label for="jumlah_ketersediaan" class="form-label">Jumlah Ketersediaan</label>
-                        <input type="number" class="form-control" id="jumlah_ketersediaan" name="jumlah_ketersediaan" required>
+                        <input type="number" class="form-control" id="jumlah_ketersediaan" name="jumlah_ketersediaan"
+                            required>
                     </div>
                     <div class="mb-3">
                         <label for="satuan" class="form-label">Satuan</label>
@@ -72,7 +78,8 @@
                     </div>
                     <div class="mb-3">
                         <label for="gambar_perangkat" class="form-label">Gambar Perangkat</label>
-                        <input type="file" class="form-control" id="gambar_perangkat" name="gambar_perangkat">
+                        <input type="file" class="form-control" id="gambar_perangkat" name="gambar_perangkat"
+                            accept=".png, .jpg, .jpeg">
                     </div>
                     <div class="mb-3">
                         <label for="link_ref" class="form-label">Link Referensi</label>
