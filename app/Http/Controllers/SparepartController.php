@@ -41,6 +41,8 @@ class SparepartController extends Controller
 
     $sparepart = new Sparepart($validated);
 
+    $sparepart->kategori_id = $request->kategori_id ?? 1;
+
     if ($request->hasFile('gambar_perangkat')) {
         $imageName = time() . '.' . $request->gambar_perangkat->extension();
         $request->gambar_perangkat->move(public_path('images/spareparts'), $imageName);

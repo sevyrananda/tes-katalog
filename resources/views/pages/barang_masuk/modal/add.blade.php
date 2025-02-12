@@ -16,23 +16,25 @@
                     </div>
                     <div class="mb-3">
                         <label for="kategori" class="form-label">Kategori Barang</label>
-                        <select class="form-control" id="kategori" name="kategori" required>
+                        <select id="kategori" name="kategori_id" class="form-control" required>
                             <option value="">-- Pilih Kategori --</option>
-                            <option value="sparepart">Sparepart</option>
-                            <option value="toolkit">Toolkit</option>
-                            <option value="network">Network</option>
-                            <option value="cctv">CCTV</option>
+                            @foreach($kategoriBarang as $kategori)
+                                <option value="{{ $kategori->id }}">{{ $kategori->nama_kategori }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="kode_barang" class="form-label">Kode Barang</label>
-                        <select class="form-control" id="kode_barang" name="kode_barang" required>
+                        <select id="kode_barang" name="kode_barang" class="form-control" required>
                             <option value="">-- Pilih Kode Barang --</option>
+                            @foreach ($kodeBarangList as $kodeBarang)
+                                <option value="{{ $kodeBarang->kode_barang }}">{{ $kodeBarang->kode_barang }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="nama_barang" class="form-label">Nama Barang</label>
-                        <input type="text" class="form-control" id="nama_barang" name="nama_barang" readonly>
+                        <input type="text" class="form-control" id="nama_barang" name="nama_barang" placeholder="Nama Barang" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="jumlah_masuk" class="form-label">Jumlah Barang Masuk</label>
@@ -40,7 +42,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="lokasi" class="form-label">Lokasi Penyimpanan</label>
-                        <input type="text" class="form-control" id="lokasi" name="lokasi" required>
+                        <input type="text" class="form-control" id="lokasi_penyimpanan" name="lokasi_penyimpanan" required>
                     </div>
                     <div class="text-end">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -54,42 +56,32 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    // Ketika kategori berubah, ambil kode barang sesuai kategori
+    const kodeBarangList = @json($kodeBarangList);
+    const kodeToolkitList = @json($kodeToolkit);
+    const combinedKodeBarangList = [...kodeBarangList, ...kodeToolkitList];
+
     document.getElementById("kategori").addEventListener("change", function () {
-        let kategori = this.value;
-        let kodeBarangDropdown = document.getElementById("kode_barang");
+        const selectedKategori = this.value;
+        const kodeBarangDropdown = document.getElementById("kode_barang");
         
-        // Kosongkan dropdown kode barang
         kodeBarangDropdown.innerHTML = '<option value="">-- Pilih Kode Barang --</option>';
 
-        if (kategori) {
-            fetch(`/api/kode-barang/${kategori}`)
-                .then(response => response.json())
-                .then(data => {
-                    data.forEach(item => {
-                        let option = document.createElement("option");
-                        option.value = item.kode_barang;
-                        option.text = item.kode_barang;
-                        kodeBarangDropdown.appendChild(option);
-                    });
-                });
+        if (selectedKategori) {
+            const filteredKodeBarang = combinedKodeBarangList.filter(item => item.kategori_id == selectedKategori);
+            filteredKodeBarang.forEach(item => {
+                const option = document.createElement("option");
+                option.value = item.kode_barang;
+                option.text = item.kode_barang;
+                kodeBarangDropdown.appendChild(option);
+            });
         }
     });
 
-    // Ketika kode barang dipilih, tampilkan nama barang secara otomatis
     document.getElementById("kode_barang").addEventListener("change", function () {
-        let kodeBarang = this.value;
-        let namaBarangField = document.getElementById("nama_barang");
-
-        if (kodeBarang) {
-            fetch(`/api/nama-barang/${kodeBarang}`)
-                .then(response => response.json())
-                .then(data => {
-                    namaBarangField.value = data.nama_barang;
-                });
-        } else {
-            namaBarangField.value = "";
-        }
+        const selectedKodeBarang = this.value;
+        const namaBarangField = document.getElementById("nama_barang");
+        const selectedBarang = combinedKodeBarangList.find(item => item.kode_barang === selectedKodeBarang);
+        namaBarangField.value = selectedBarang ? selectedBarang.nama_barang : "";
     });
 });
 </script>

@@ -40,6 +40,8 @@ class ToolKitController extends Controller
 
         $toolkit = new ToolKit($validated);
 
+        $toolkit->kategori_id = $request->kategori_id ?? 2;
+
         if ($request->hasFile('gambar_perangkat')) {
             $imageName = time() . '.' . $request->gambar_perangkat->extension();
             $request->gambar_perangkat->move(public_path('images/toolkits'), $imageName);

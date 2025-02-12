@@ -16,6 +16,10 @@ class ToolKit extends Model
      */
     protected $table = 'toolkits';
 
+    protected $attributes = [
+        'kategori_id' => 2 // Ubah sesuai ID kategori default
+    ];
+
     protected $fillable = [
         'kode_barang',
         'nama_barang',
@@ -35,4 +39,9 @@ class ToolKit extends Model
         'gambar_perangkat',
         'link_ref',
     ];
+
+    public function kategoriBarang()
+    {
+        return $this->belongsTo(KategoriBarang::class, 'kategori_id');
+    }
 }

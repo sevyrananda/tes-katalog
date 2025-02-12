@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -30,6 +29,10 @@ return new class extends Migration
             $table->text('keterangan')->nullable();
             $table->string('gambar_perangkat')->nullable();
             $table->string('link_ref')->nullable();
+           // Perbaiki foreign key
+           $table->unsignedBigInteger('kategori_id')->nullable();
+           $table->foreign('kategori_id')->references('id')->on('kategori_barang')->onDelete('set null');
+
             $table->timestamps();
         });
     }

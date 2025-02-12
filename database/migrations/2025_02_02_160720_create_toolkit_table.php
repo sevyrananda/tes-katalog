@@ -30,6 +30,10 @@ return new class extends Migration
             $table->text('keterangan')->nullable();
             $table->string('gambar_perangkat')->nullable();
             $table->string('link_ref')->nullable();
+            // Perbaiki foreign key
+            $table->unsignedBigInteger('kategori_id')->nullable();
+            $table->foreign('kategori_id')->references('id')->on('kategori_barang')->onDelete('set null');
+
             $table->timestamps();
         });
     }

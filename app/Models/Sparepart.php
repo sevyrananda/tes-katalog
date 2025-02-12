@@ -14,6 +14,11 @@ class Sparepart extends Model
      *
      * @var array
      */
+
+     protected $attributes = [
+        'kategori_id' => 1 // Ubah sesuai ID kategori default
+    ];
+    
     protected $fillable = [
         'kode_barang',
         'nama_barang',
@@ -32,5 +37,12 @@ class Sparepart extends Model
         'keterangan',
         'gambar_perangkat',
         'link_ref',
+        'kategori'
     ];
+
+    public function kategoriBarang()
+{
+    return $this->belongsTo(KategoriBarang::class, 'kategori_id');
+}
+
 }
