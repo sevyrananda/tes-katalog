@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ToolKit;
+use App\Models\Barang;
+use Illuminate\Support\Facades\File;
 
 class ToolKitController extends Controller
 {
@@ -36,24 +38,27 @@ class ToolKitController extends Controller
 
         $lastToolKit = ToolKit::latest()->first();
         $nextId = $lastToolKit ? $lastToolKit->id + 1 : 1;
-        $validated['kode_barang'] = 'BB' . $nextId; // Format Kode Barang
+        $validated['kode_barang'] = 'BB' . str_pad($nextId, 1, '0', STR_PAD_LEFT);
 
-        $toolkit = new ToolKit($validated);
-
-        $toolkit->kategori_id = $request->kategori_id ?? 2;
-
+        // Proses upload gambar
         if ($request->hasFile('gambar_perangkat')) {
             $imageName = time() . '.' . $request->gambar_perangkat->extension();
             $request->gambar_perangkat->move(public_path('images/toolkits'), $imageName);
-            $toolkit->gambar_perangkat = $imageName;
+            $validated['gambar_perangkat'] = $imageName;
         }
 
-        $toolkit->save();
+        // Simpan ke tabel toolkit
+        $toolkit = ToolKit::create($validated);
 
-        // Mengambil seluruh toolkit setelah berhasil disimpan
-        $toolkits = ToolKit::all();
+        // Simpan ke tabel barang
+        Barang::create([
+            'kode_barang' => $validated['kode_barang'],
+            'nama_barang' => $validated['nama_barang'],
+            'kategori_id' => $request->kategori_id ?? 2,
+            'jumlah_ketersediaan' => $validated['jumlah_ketersediaan'],
+        ]);
 
-        return redirect()->route('toolkit.index')->with('success', 'Data berhasil ditambahkan!', compact('toolkits'));
+        return redirect()->route('toolkit.index')->with('success', 'Data berhasil ditambahkan!');
     }
 
 
@@ -87,11 +92,14 @@ class ToolKitController extends Controller
             'link_ref' => 'nullable|url',
         ]);
 
-        // Jika ada gambar baru, hapus gambar lama dan upload gambar baru
+        // Proses update gambar
         if ($request->hasFile('gambar_perangkat')) {
-            if ($toolkit->gambar_perangkat && file_exists(public_path('images/toolkits/' . $toolkit->gambar_perangkat))) {
-                unlink(public_path('images/toolkits/' . $toolkit->gambar_perangkat));
+            // Hapus gambar lama jika ada
+            if ($toolkit->gambar_perangkat && File::exists(public_path('images/toolkits/' . $toolkit->gambar_perangkat))) {
+                File::delete(public_path('images/toolkits/' . $toolkit->gambar_perangkat));
             }
+
+            // Upload gambar baru
             $imageName = time() . '.' . $request->gambar_perangkat->extension();
             $request->gambar_perangkat->move(public_path('images/toolkits'), $imageName);
             $validated['gambar_perangkat'] = $imageName;
@@ -100,6 +108,12 @@ class ToolKitController extends Controller
         // Update data toolkit
         $toolkit->update($validated);
 
+        // Update juga di tabel barang
+        Barang::where('kode_barang', $toolkit->kode_barang)->update([
+            'nama_barang' => $validated['nama_barang'],
+            'jumlah_ketersediaan' => $validated['jumlah_ketersediaan'],
+        ]);
+
         return redirect()->route('toolkit.index')->with('success', 'Toolkit Berhasil Diupdate');
     }
 
@@ -107,8 +121,29 @@ class ToolKitController extends Controller
     public function destroy($id)
     {
         $toolkit = ToolKit::findOrFail($id);
+
+        // Hapus gambar jika ada
+        if ($toolkit->gambar_perangkat && File::exists(public_path('images/toolkits/' . $toolkit->gambar_perangkat))) {
+            File::delete(public_path('images/toolkits/' . $toolkit->gambar_perangkat));
+        }
+
+        // Hapus data toolkit
         $toolkit->delete();
 
+        // Hapus juga dari tabel barang
+        Barang::where('kode_barang', $toolkit->kode_barang)->delete();
+
         return redirect()->route('toolkit.index')->with('success', 'Toolkit Berhasil Dihapus');
+    }
+
+    public function barangMasuk()
+    {
+        return $this->hasMany(BarangMasuk::class, 'kode_barang', 'kode_barang');
+    }
+
+    // Relasi ke tabel barang_keluar
+    public function barangKeluar()
+    {
+        return $this->hasMany(BarangKeluar::class, 'kode_barang', 'kode_barang');
     }
 }

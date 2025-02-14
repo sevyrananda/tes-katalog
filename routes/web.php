@@ -83,3 +83,6 @@ Route::delete('/katalog/upss/{id}', [UpsController::class, 'destroy'])->name('up
 
 Route::get('/transaksi/barang-masuk', [BarangMasukController::class, 'index'])->name('barang_masuk.index');
 Route::post('/transaksi/barang-masuk', [BarangMasukController::class, 'store'])->name('barang_masuk.store');
+Route::get('/transaksi/barang-masuk/{id}/edit', [BarangMasukController::class, 'edit'])->name('barang_masuk.edit');
+Route::put('/transaksi/barang-masuk/{id}', [BarangMasukController::class, 'update'])->name('barang_masuk.update');
+Route::delete('/transaksi/barang-masuk/{id}', [BarangMasukController::class, 'destroy'])->name('barang_masuk.destroy');

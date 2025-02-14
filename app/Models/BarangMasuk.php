@@ -18,4 +18,9 @@ class BarangMasuk extends Model
     {
         return $this->belongsTo(Sparepart::class, 'kode_barang', 'kode_barang');
     }
+
+    public function toolkit()
+    {
+        return $this->belongsTo(ToolKit::class, 'kode_barang', 'kode_barang');
+    }
 }

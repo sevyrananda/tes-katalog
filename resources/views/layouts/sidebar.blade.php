@@ -137,7 +137,7 @@
         </li>
 
         <!-- Transaksi -->
-        <li class="menu-item @if (request()->routeIs('sparepart.index')) active @endif">
+        <li class="menu-item @if (request()->routeIs('barang_masuk.index')) active @endif">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-transfer-alt"></i>
                 <div data-i18n="Layouts">Transaksi Barang</div>

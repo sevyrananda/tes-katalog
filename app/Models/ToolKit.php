@@ -38,6 +38,7 @@ class ToolKit extends Model
         'keterangan',
         'gambar_perangkat',
         'link_ref',
+        'kategori',
     ];
 
     public function kategoriBarang()

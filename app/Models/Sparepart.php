@@ -37,7 +37,7 @@ class Sparepart extends Model
         'keterangan',
         'gambar_perangkat',
         'link_ref',
-        'kategori'
+        'kategori',
     ];
 
     public function kategoriBarang()

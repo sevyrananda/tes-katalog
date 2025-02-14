@@ -18,5 +18,6 @@ class Barang extends Model
         'kode_barang',
         'nama_barang',
         'kategori_id',
+        'jumlah_ketersediaan',
     ];
 }
